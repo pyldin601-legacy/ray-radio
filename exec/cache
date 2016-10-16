@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use DBI;
+use LWP::Simple;
+use URI::Escape;
+use JSON;
+
+use Data::Dumper;
+
+my $cache_expire_days = 7;
+my $banned_artists = 'ID,Various,Various Artists';
+
+my $db_host = 'localhost';
+my $db_user = 'root';
+my $db_pass = '';
+my $db_base = 'jrp';
+
+my $db1 = DBI->connect("dbi:mysql:${db_base}:${db_host}:3386", $db_user, $db_pass);
+$db1->do("SET NAMES 'utf8'");
+
+my $h = $db1->prepare("SELECT * FROM `jrp_pop_cache` WHERE (TO_DAYS(NOW()) - TO_DAYS(`updated`)) > ? AND NOT FIND_IN_SET(`artist`, ?)");
+
+$h->execute($cache_expire_days, $banned_artists);
+my $total_items = $h->rows();
+print "Items: $total_items\n";
+while(@row = $h->fetchrow_array()) {
+	my ($pc, $au) = fm_playcount($row[1], $row[2]);
+	print "Updating '$row[1] - $row[2]' played $pc ($au) times.\n";
+	$db1->do("UPDATE `jrp_pop_cache` SET `pc` = ?, `au` = ?, `updated` = NOW() WHERE `id` = ?", undef, $pc, $au, $row[0]);
+}
+
+$db1->do("OPTIMIZE TABLE `jrp_pop_cache`");
+$db1->disconnect();
+
+sub fm_playcount {
+    my $artist = uri_escape shift;
+    my $title = uri_escape shift;
+    my $pc = 0, $au = 0;
+    eval {
+	my $data = get("http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=f7a8f639e4747490849e3bc33475b118&artist=${artist}&track=${title}&format=json");
+	my $st_json = decode_json($data);
+        $pc = int($st_json->{track}->{playcount});
+        $au = int($st_json->{track}->{listeners});
+    };
+    return $pc, $au;
+}

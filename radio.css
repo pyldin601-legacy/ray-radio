@@ -1,0 +1,171 @@
+@import "http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic";
+
+html,body {
+    height: 100%;
+}
+
+body {
+	text-align:center;
+
+	font-family: "Open Sans","lucida grande","Segoe UI",arial,verdana,"lucida sans unicode",tahoma,sans-serif;
+	font-weight:normal;
+	font-size:14pt;
+
+    background-image: url("images/background.jpg");
+    background-size: contain;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    height: 100%;
+
+	margin:0;
+	padding:0;
+
+    color: white;
+    text-shadow: 0 0 4px #000;
+
+}
+
+.play_container {
+    width: 192px;
+    height: 192px;
+    position: relative;
+    left: 50%;
+    margin-left: -96px;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.play_container #logo {
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 5px #000000;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.play_container #play {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.play_container.stopped #logo {
+    opacity: 0.5;
+}
+
+.play_container.stopped #play {
+    display: block;
+}
+
+span#jfs {
+	font-size:1.1em;
+}
+
+span#title {
+	font-weight:normal;
+}
+
+span#ch {
+	font-size:0.9em;
+	font-weight:bold;
+}
+
+span#next {
+	font-size:0.7em;
+	color:#666;
+}
+
+div#now {
+	font-size:0.7em;
+	padding-bottom:8px;
+}
+
+div.radioclass {
+	position:absolute;
+	height:300px;
+	width:100%;
+	top:50%;
+	margin-top:-190px;
+}
+
+div#copy {
+	font-size:9pt;
+	bottom:0;
+	position:absolute;
+	width:100%;
+	padding-bottom:5px;
+}
+
+div#log {
+	font-size:7pt;
+	bottom:0;
+	position:absolute;
+	width:100%;
+	text-align:left;
+}
+
+
+
+
+a {
+	text-decoration:none;
+	color:white;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+div#menu {
+	position:absolute;
+	top:0;
+	width:100%;
+	font-size:8pt;
+	line-height:20px;
+	padding-top:4px;
+}
+
+div#menu a {
+	padding:1px 2px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-khtml-border-radius:3px;
+	border-radius:3px;
+	background:#eee;
+	padding:2px 4px;
+}
+
+div#menu a:hover {
+	background:#ddd;
+	text-decoration:none;
+}
+
+div#menu span#cc {
+	font-weight:bold;
+	color:white;
+	background:#666;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-khtml-border-radius:3px;
+	border-radius:3px;
+	padding:2px 4px;
+}
+
+div.pb {
+    display:none;
+    background:#aaa;
+    width:320px;
+    height:8px;
+    margin:8px auto;
+}
+
+div.pb .fg {
+    height:100%;
+    background:#080;
+}
